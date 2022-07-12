@@ -1,29 +1,38 @@
-from urllib.request import Request
-import flask
-import urllib3
-import uvicorn
-import requests
-import boto3
-from collections import OrderedDict
+# Copyright 2020 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 
+# [START aiplatform_predict_tabular_classification_sample]
 
-from fastapi import FastAPI, Request
-
-app = flask.Flask(__name__)
+# Requirements
+# numpy
+# protobuf
+# gcloud
+# google-cloud-aiplatform
 
 from typing import Dict
-from flask import Flask, jsonify
+from flask import jsonify
 
 from google.cloud import aiplatform
 from google.protobuf import json_format
 from google.protobuf.struct_pb2 import Value
 from numpy import place
-from google.protobuf.json_format import MessageToJson
 
 
 def addCors(response, code=200):
     headers = {'Access-Control-Allow-Origin': '*'}
     return (response, code, headers)
+
 
 def predict_tabular_classification_sample(
     project: str,
@@ -55,8 +64,9 @@ def predict_tabular_classification_sample(
     # See gs://google-cloud-aiplatform/schema/predict/prediction/tabular_classification_1.0.0.yaml for the format of the predictions.
     predictions = response.predictions
     for prediction in predictions:
-        return prediction
+        return dict(prediction)
 
+    # return predictions
 
 def predict_price(days, place):
     data = predict_tabular_classification_sample(
@@ -78,13 +88,12 @@ def predict_price(days, place):
 
     return res
 
-@app.route('/', methods=['GET'])
-def deletefile():
-    data = predict_price("3", "Halifax")
-    return jsonify(data)
+def function_handle(request):
+    days = request.args.get('days')
+    place = request.args.get('place')
+    data = predict_price(days, place)
 
-
-
-if __name__ == "__main__":
-    app.run()
-
+    return addCors(jsonify({
+        "success": True,
+        "data": dict(data)
+    }))
