@@ -16,7 +16,7 @@ const SearchRoom = () => {
             "id":"2",
             "roomAmenity":"dasd",
             "roomPrice":"4324",
-            "imageURL":"https://images.pexels.com/photos/262048/pexels-photo-262048.jpeg"
+            "imageURL":"https://group11roomimages.s3.amazonaws.com/2022-07-12T21:40:49.248Z.jpeg"
         },
         {
             "id":"3",

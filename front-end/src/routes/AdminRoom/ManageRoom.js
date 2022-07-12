@@ -26,7 +26,8 @@ const ManageRoom = () => {
       "roomAmenity" :roomAdd.roomAmenity,
       "noBeds" :roomAdd.noBeds,
       "roomNo" :roomAdd.roomNo,
-      "roomPrice" :roomAdd.roomPrice
+      "roomPrice" :roomAdd.roomPrice,
+      "roomImageFile":roomAdd.roomImageFile
     })})
     const data = await res.json()  
     return data
@@ -44,7 +45,9 @@ const ManageRoom = () => {
       "roomAmenity" :roomEdit.roomAmenity,
       "noBeds" :roomEdit.noBeds.toString(),
       "roomNo" :roomEdit.roomNo,
-      "roomPrice" :roomEdit.roomPrice.toString()
+      "roomPrice" :roomEdit.roomPrice.toString(),
+      "roomImageFile":roomEdit.roomImageFile,
+      "roomImageURL":roomEdit.roomImageURL
     })})
     const data = await res.json()  
     return data
