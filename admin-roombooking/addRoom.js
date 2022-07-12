@@ -15,5 +15,5 @@ exports.handler = async (event) => {
     };
     var result = await dynamo.putItem(params).promise();
     result = JSON.stringify(result);
-   return result;
+   return result; 
 };
