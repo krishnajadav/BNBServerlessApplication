@@ -9,8 +9,8 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          <Route path='/tours' element={<ShowTours />}></Route>
-          <Route path='/booking_confirmation' element={<BookingConfirmation />}></Route>
+          <Route path='/' element={<BookingConfirmation />}></Route>
+          <Route path='/show_tours' element={<ShowTours />}></Route>
         </Routes>
       </BrowserRouter>
     </div>
