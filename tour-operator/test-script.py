@@ -1,90 +1,19 @@
-from urllib.request import Request
-import flask
-import urllib3
-import uvicorn
-import requests
 import boto3
-from collections import OrderedDict
+from boto3.dynamodb.conditions import Key
+
+dynamodb_client = boto3.resource('dynamodb',
+                                 region_name='us-east-1',
+                                 aws_access_key_id="ASIARR4VPHN4XODUND7G",
+                                 aws_secret_access_key="Yc3DYxwf31UMuZjCFx8egw4OQrVopy5EyiqHKo7c",
+                                 aws_session_token="FwoGZXIvYXdzEFAaDHi/uJzdzIYV/8dbZiLAAQGYXlPsMaeLR/KFWHG+KzC6kKe7hppnrzYEdZompeag9wuX0ENtalNpTEX/R9T+BTXZaZtC65BvrVc7HyirRgrHIn5lWjaFNXxAeGHd3idmk5koq0H1n9doRWS6D/4zOfs3aYTzaqRpfiKrd9y0yaYR7M710wHiubZUR96D0jRmeaQipwadNp5SYt1M+KH+SAdxcgx05/vwz7f5yJlpYzPkcC9lOvLr0n2GjCUoTvbdO4B7zBCh/fvrkLTZZa2rJyiok4OWBjItONFIcuADCQQo2GEgPMerr7qOqAUqOxbDfBRwGYpizf5rBXVQ6Rllc4Bpy05S"
+                                 )
+TOUR_DETAILS_TABLE_NAME = "tour-details"
+TOUR_TICKETS_TABLE_NAME = "tour-tickets"
 
 
-from fastapi import FastAPI, Request
+table = dynamodb_client.Table(TOUR_TICKETS_TABLE_NAME)
+response = table.scan(
+    FilterExpression=Key('user_id').eq('deep'),
+)
 
-app = flask.Flask(__name__)
-
-from typing import Dict
-from flask import Flask, jsonify
-
-from google.cloud import aiplatform
-from google.protobuf import json_format
-from google.protobuf.struct_pb2 import Value
-from numpy import place
-from google.protobuf.json_format import MessageToJson
-
-
-def addCors(response, code=200):
-    headers = {'Access-Control-Allow-Origin': '*'}
-    return (response, code, headers)
-
-def predict_tabular_classification_sample(
-    project: str,
-    endpoint_id: str,
-    instance_dict: Dict,
-    location: str = "us-central1",
-    api_endpoint: str = "us-central1-aiplatform.googleapis.com",
-):
-    # The AI Platform services require regional API endpoints.
-    client_options = {"api_endpoint": api_endpoint}
-    # Initialize client that will be used to create and send requests.
-    # This client only needs to be created once, and can be reused for multiple requests.
-    client = aiplatform.gapic.PredictionServiceClient(
-        client_options=client_options)
-    # for more info on the instance schema, please use get_model_sample.py
-    # and look at the yaml found in instance_schema_uri
-    instance = json_format.ParseDict(instance_dict, Value())
-    instances = [instance]
-    parameters_dict = {}
-    parameters = json_format.ParseDict(parameters_dict, Value())
-    endpoint = client.endpoint_path(
-        project=project, location=location, endpoint=endpoint_id
-    )
-    response = client.predict(
-        endpoint=endpoint, instances=instances, parameters=parameters
-    )
-    print("response")
-    print(" deployed_model_id:", response.deployed_model_id)
-    # See gs://google-cloud-aiplatform/schema/predict/prediction/tabular_classification_1.0.0.yaml for the format of the predictions.
-    predictions = response.predictions
-    for prediction in predictions:
-        return prediction
-
-
-def predict_price(days, place):
-    data = predict_tabular_classification_sample(
-        project="702829149860",
-        endpoint_id="9055287495293403136",
-        location="us-central1",
-        instance_dict={"Days": str(days), "City": place}
-    )
-
-    res = {}
-    res['classes'] = []
-    res['scores'] = []
-
-    for i in data['classes']:
-        res['classes'].append(int(i))
-
-    for i in data['scores']:
-        res['scores'].append(i)
-
-    return res
-
-@app.route('/', methods=['GET'])
-def deletefile():
-    data = predict_price("3", "Halifax")
-    return jsonify(data)
-
-
-
-if __name__ == "__main__":
-    app.run()
-
+print(response)

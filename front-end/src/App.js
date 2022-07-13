@@ -1,18 +1,32 @@
 import logo from './logo.svg';
 import './App.css';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import ShowTours from './routes/tours/show_tours';
 import BookingConfirmation from './routes/tours/booking_confirmation';
-
+import ManageRoom from './routes/AdminRoom/ManageRoom'
+import SearchRoom from './routes/CustomerRoom/SearchRoom'
+import User from './routes/Feedback/user';
+import Admin from './routes/Feedback/admin';
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
+    <Router>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <Link to="/" class="navbar-brand">HotelBooking</Link>
+    </nav>
+    <br></br>
+    <div className="container">
         <Routes>
-          <Route path='/' element={<BookingConfirmation />}></Route>
-          <Route path='/show_tours' element={<ShowTours />}></Route>
+          <Route exact path="/" element={<SearchRoom/>}/>
+          <Route exact path="/ManageRoom" element={<ManageRoom/>}/>
+          <Route exact path="/SearchRoom" element={<SearchRoom/>}/>
+          <Route path='/tours' element={<ShowTours />}></Route>
+          <Route path='/booking_confirmation' element={<BookingConfirmation />}></Route>
+          <Route path={'/feedbackuser'} element={<User />} ></Route>
+          <Route path={'/feedbackadmin'} element={<Admin/>}></Route>
         </Routes>
-      </BrowserRouter>
+      </div>
+    </Router>
     </div>
   );
 }

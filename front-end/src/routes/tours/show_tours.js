@@ -1,44 +1,23 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-
-function largestIndex(array) {
-  var counter = 1;
-  var max = 0;
-
-  for (counter; counter < array.length; counter++) {
-    if (array[max] < array[counter]) {
-      max = counter;
-    }
-  }
-  return max;
-}
+import { useNavigate } from 'react-router-dom';
 
 function ShowTours(props) {
   const [availablePlaces, setAvailablePlaces] = useState([]);
-  const location = useLocation();
-  const [data, setData] = useState({});
-  const [prediction, setPrediction] = useState();
-  const [price, setPrice] = useState();
+  const navigate = useNavigate();
 
-  const getData = async (data) => {
-    setData(data)
-    const response = await axios.get('https://us-central1-peak-service-312506.cloudfunctions.net/get_available_places');
+  const getData = async () => {
+    const response = await axios.get('https://us-central1-server-less-355121.cloudfunctions.net/get-ticket-prices');
     setAvailablePlaces(response.data.data);
-    predictData(data.place, data.days)
-  }
-
-  const predictData = async (place, days) => {
-    const response = await axios.get(`https://us-central1-peak-service-312506.cloudfunctions.net/predict-prices?place=${place}&days=${days}`)
-    setPrediction(response.data.data);
-    const index = largestIndex(response.data.data.scores)
-    setPrice(response.data.data.classes[index])
   }
 
   useEffect(() => {
-    getData(location.state);
-    console.log(location)
+    getData();
   }, [])
+
+  const bookTicket = (item) => {
+    navigate('/booking_confirmation', { state: { item } });
+  }
 
   return (
     <div className="container mt-5">
@@ -46,17 +25,14 @@ function ShowTours(props) {
       <div className="col-md-12 row mb-4">
         {
           availablePlaces.map((item, index) => {
-            if(item.place.toLowerCase() != data?.place?.toLowerCase()) {
-              return
-            }
-
             return (
               <div className="card col-md-3">
                 <img className="card-img-top mt-2" src={item.image} alt={item.place} />
                 <div className="card-body">
                   <h5 className="card-title">{item.place}</h5>
-                  <strong><p className="card-text">Price: {price}$</p></strong>
                   <p className="card-text">{item.description}</p>
+                  <h5 className="card-title">Price : {item.price}$ - 7 days</h5>
+                  <a href="#" onClick={(e) => bookTicket(item)} className="btn btn-primary">Book this place</a>
                 </div>
               </div>
             );
