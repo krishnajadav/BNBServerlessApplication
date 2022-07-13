@@ -1,0 +1,51 @@
+var AWS = require('aws-sdk');
+AWS.config.update({
+  accessKeyId: "ASIAQZUNND36VHK77L5P",
+  secretAccessKey: "8W7wKBXanhb7XdX1hMbg88UzPCEmYyL4hP09wF8G",
+  sessionToken: "FwoGZXIvYXdzEEQaDH8oi4fH2VJDFOpavyLAAWzQpJgp5H/Mjs2H4VwagN/SAZ0LhR75IqPh1D8meJ3bT+efhZSC+wXz2llRMX+FhiFlcke3ajXL8eSjr2+ih6dphElgMJYiO3rzQQBdFTmcLKEHnbjQ12N7bLlMFEwILLGDLvTBOZJ2C0InHlZsc57ovc+NMdhfO11Dd4rD1+lJiEh+wvXksSN/pv1fFcmq2G0KjtD/I6JbUebteG7auQT+HqiHHJQ/nnqQX1X8oi9tpy0lxpAcN+t+LDpDUWm+sCjk0riWBjItt/8KcQiPr0yktgNeFsg0lva4BgKvabXc4A4HrFefvAOfNbAT02rLRQ1TD0Bn"
+});
+
+// Create the DynamoDB service object
+var ddb = new AWS.DynamoDB({
+    region: 'us-east-1',
+    apiVersion: '2012-08-10'
+});
+
+//reference taken from - https://www.fernandomc.com/posts/eight-examples-of-fetching-data-from-dynamodb-with-node/
+//function to get frequency of an existing item from DynamoDB
+async function getMenu(params) {
+    return new Promise(function(resolve, reject) {
+        ddb.scan(params, function(err, data) {
+            if (err) {
+                console.log(err);
+            } else {
+                var menu = "{\"menu\":[";
+               
+                data.Items.forEach(function (element, index, array) {
+                   console.log(element);
+                   var id =  "{\"id\":\"" +element.id.S+"\",";
+                   var name =  "\"name\":\"" +element.name.S+"\",";
+                   var price =  "\"price\":\"" +element.price.S+"\"";
+
+                   var menuItem = id+name+price+"},";
+                   menu = menu + menuItem;
+                  });
+                  menu= menu.slice(0,-1);
+                resolve(menu+"]}");
+            }
+        })
+    });
+}
+
+exports.getMenu = (req, res) => {
+    const params = {
+        TableName: "menu",
+      };
+    
+    (async () => {
+       var menu = await getMenu(params); 
+      
+    res.status(200).send(menu);
+            
+    })();
+};

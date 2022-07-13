@@ -1,0 +1,76 @@
+var AWS = require('aws-sdk');
+AWS.config.update({
+  accessKeyId: "ASIAQZUNND36VHK77L5P",
+  secretAccessKey: "8W7wKBXanhb7XdX1hMbg88UzPCEmYyL4hP09wF8G",
+  sessionToken: "FwoGZXIvYXdzEEQaDH8oi4fH2VJDFOpavyLAAWzQpJgp5H/Mjs2H4VwagN/SAZ0LhR75IqPh1D8meJ3bT+efhZSC+wXz2llRMX+FhiFlcke3ajXL8eSjr2+ih6dphElgMJYiO3rzQQBdFTmcLKEHnbjQ12N7bLlMFEwILLGDLvTBOZJ2C0InHlZsc57ovc+NMdhfO11Dd4rD1+lJiEh+wvXksSN/pv1fFcmq2G0KjtD/I6JbUebteG7auQT+HqiHHJQ/nnqQX1X8oi9tpy0lxpAcN+t+LDpDUWm+sCjk0riWBjItt/8KcQiPr0yktgNeFsg0lva4BgKvabXc4A4HrFefvAOfNbAT02rLRQ1TD0Bn"
+});
+
+// Create the DynamoDB service object
+var ddb = new AWS.DynamoDB({
+    region: 'us-east-1',
+    apiVersion: '2012-08-10'
+});
+
+
+//reference taken from - https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateItem.html
+//function to put item to DynamoDB partA
+async function putItemToDB(putparams) {
+    return new Promise(function(resolve, reject) {
+        ddb.putItem(putparams, function(err, data) {
+            if (err) {
+                //resolve true if the condition expression fail
+                console.log(err);
+                resolve(false);
+            } else {
+                console.log(data);
+                //resolve false if item is successfully added to DynamoDB
+                resolve(true);
+            }
+        })
+    });
+}
+exports.placeOrder = (req, res) => {
+  var now = new Date();
+
+var isSuccess = false;
+var params = {
+    TableName: 'orders',
+    Item: {
+        'id': {
+            S: req.body.orderPlaceBy+now.toISOString()
+        },
+        'order': {
+            S: JSON.stringify(req.body.orderItems)
+        },
+        'orderPlacesTime': {
+            S: now.toISOString()
+        },
+        'orderReadyTime': {
+            S: ''
+        },
+        'orderDeliveredTime': {
+            S: ''
+        },
+        'orderCurrentStatus': {
+            S: 'Order Placed'
+        },
+        'orderPlacedBy': {
+            S: req.body.orderPlaceBy
+        },
+        'total': {
+            S: String(req.body.total)
+        },
+    }
+};
+
+(async () => {
+    isSuccess = await putItemToDB(params); //put item to DynamoDB with updated frequency value
+    if(isSuccess) {
+res.status(200).send(JSON.parse("{\"response\":\"Order Placed Successfully!\"}"));
+} else {
+    res.status(400).send(JSON.parse("{\"response\":\"There was some error while placing the order. Please try again after sometime.\"}"));
+}
+})();
+
+
+};
