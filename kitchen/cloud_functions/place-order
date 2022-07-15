@@ -3,9 +3,9 @@ var easyinvoice = require('easyinvoice');
 const { v4: uuidv4 } = require('uuid');
 //var fs = require('fs');
 AWS.config.update({
-    accessKeyId: "ASIAQZUNND36QQTY6SPF",
-    secretAccessKey: "0uvT87S++cxaYUgeX0Vmah+nTkzupjMld4r9jem1",
-    sessionToken: "FwoGZXIvYXdzEG4aDJCZEK/OG2wSZG/+UiLAAbrmuqqQ96xdC7rLGa39Cnz2Me2MjZ7NHxcMFcTr09jrotCAmhSvI8G7jt3Ltp5oatZBZES2eNFdCag+OpoTYvJgFm7oBKZapLrlri08yqU2WzIG4wb7xosSsxAMDQ6tYavuOtLmZ4BIcnU+/tbODPIMGHqvmbZijFyPR0V6hWrEnCs+8XTDPtgFrsGTIET5UBeRKfGv15+P3WNRSF7YyPyyB2QMArgt1RINV9xPcQcnyAeGWer+rDS2XjpSQZ4Zziip98GWBjIt2xpE+LEexFTyHyrOKn5ODrK6OfxUjD9nbGTzyxupKPEbQKZn66Ft459HL+8I"
+    accessKeyId: "ASIAZSJWKMQSPB44GBPR",
+    secretAccessKey: "qHG+pLiGVMly4HiOQYk1D0xLQL/TNBhorugBMrHn",
+    sessionToken: "FwoGZXIvYXdzEHUaDJQtlwh27kWnbOFjQCLAATe14DOvFqvy5vSzYJ53zsnWXvCErxWVT5kHHlHAQSsfSnLBjMfPYoA6fsGvNIHVc0v138c6HNlWRM/hTa1Z986VR9zY3gfT3Lkp8wPihvC3Z1/g5QATtJjjS/MeEGawcGTNbp4eqtfCnDzzwMSBYizbE1RZs6wIRp5ppesgOr2yDiL2eQVy+ZTchecsqnmDs75fpvD4OwBWotUlo53XSGkbhN368iJLZ/2eeOP25pmYBpxBxFNb8I6KNJ/izBMRvCjdssOWBjItEYaxg+6ongBiMCyLzBaY/VqMc2lGx/EJSzeAfX2YmWlOT3Qg/xl0N3zg18hG"
   });
 
 // Create the DynamoDB service object
@@ -15,7 +15,7 @@ var ddb = new AWS.DynamoDB({
 });
 var s3 = new AWS.S3({
     params: {
-        Bucket: 'dalsoft5410-invoices'
+        Bucket: 'invoices-dalsoft5410'
     }
 });
 
