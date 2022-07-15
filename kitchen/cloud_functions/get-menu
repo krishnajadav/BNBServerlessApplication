@@ -1,9 +1,9 @@
 var AWS = require('aws-sdk');
 AWS.config.update({
-  accessKeyId: "ASIAQZUNND36VHK77L5P",
-  secretAccessKey: "8W7wKBXanhb7XdX1hMbg88UzPCEmYyL4hP09wF8G",
-  sessionToken: "FwoGZXIvYXdzEEQaDH8oi4fH2VJDFOpavyLAAWzQpJgp5H/Mjs2H4VwagN/SAZ0LhR75IqPh1D8meJ3bT+efhZSC+wXz2llRMX+FhiFlcke3ajXL8eSjr2+ih6dphElgMJYiO3rzQQBdFTmcLKEHnbjQ12N7bLlMFEwILLGDLvTBOZJ2C0InHlZsc57ovc+NMdhfO11Dd4rD1+lJiEh+wvXksSN/pv1fFcmq2G0KjtD/I6JbUebteG7auQT+HqiHHJQ/nnqQX1X8oi9tpy0lxpAcN+t+LDpDUWm+sCjk0riWBjItt/8KcQiPr0yktgNeFsg0lva4BgKvabXc4A4HrFefvAOfNbAT02rLRQ1TD0Bn"
-});
+    accessKeyId: "ASIAZSJWKMQSPB44GBPR",
+    secretAccessKey: "qHG+pLiGVMly4HiOQYk1D0xLQL/TNBhorugBMrHn",
+    sessionToken: "FwoGZXIvYXdzEHUaDJQtlwh27kWnbOFjQCLAATe14DOvFqvy5vSzYJ53zsnWXvCErxWVT5kHHlHAQSsfSnLBjMfPYoA6fsGvNIHVc0v138c6HNlWRM/hTa1Z986VR9zY3gfT3Lkp8wPihvC3Z1/g5QATtJjjS/MeEGawcGTNbp4eqtfCnDzzwMSBYizbE1RZs6wIRp5ppesgOr2yDiL2eQVy+ZTchecsqnmDs75fpvD4OwBWotUlo53XSGkbhN368iJLZ/2eeOP25pmYBpxBxFNb8I6KNJ/izBMRvCjdssOWBjItEYaxg+6ongBiMCyLzBaY/VqMc2lGx/EJSzeAfX2YmWlOT3Qg/xl0N3zg18hG"
+  });
 
 // Create the DynamoDB service object
 var ddb = new AWS.DynamoDB({
