@@ -1,5 +1,11 @@
 const functions = require("firebase-functions");
 const AWS = require("aws-sdk");
+const cors = require("cors");
+const express = require("express");
+
+const API = express();
+
+API.use(cors());
 
 // set credentials for AWS
 AWS.config.update({
@@ -34,7 +40,7 @@ exports.registerUser = functions.auth.user().onCreate(async (user) => {
 	return dynamodb.putItem(params).promise();
 });
 
-exports.setSecurityQuestions = functions.https.onRequest(async (req, res) => {
+API.post("/setSecurityQuestions", async (req, res) => {
 	try {
 		// request body
 		const uid = req.body.uid;
@@ -65,7 +71,7 @@ exports.setSecurityQuestions = functions.https.onRequest(async (req, res) => {
 	}
 });
 
-exports.verifySecurityQuestions = functions.https.onRequest(async (req, res) => {
+API.post("/verifySecurityQuestions", async (req, res) => {
 	const uid = req.body.uid;
 	const securityQuestions = req.body.securityQuestions;
 
@@ -108,3 +114,5 @@ exports.verifySecurityQuestions = functions.https.onRequest(async (req, res) => 
 		message: "Security questions match",
 	});
 });
+
+exports.api = functions.https.onRequest(API);
