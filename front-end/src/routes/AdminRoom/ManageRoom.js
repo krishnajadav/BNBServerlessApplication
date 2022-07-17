@@ -4,13 +4,18 @@ import {useState,useEffect}  from 'react'
 const ManageRoom = () => {
 
   const [rooms,setrooms]=useState([])
-
+  const [feedback,setFeedback]=useState([]);
   useEffect(() => {
     const getRooms = async () => {
     const RoomList = await getRoom()
     setrooms(RoomList)
   }
   getRooms()
+  const getFeedback = async () => {
+    const Feedbacklist = await getFeedbacks()
+    setFeedback(Feedbacklist);
+}
+getFeedback()
   },[])
 
   const getRoom = async () => {
@@ -19,6 +24,14 @@ const ManageRoom = () => {
     return data
   }  
   
+  const getFeedbacks = async () => {
+    const res = await fetch('https://4ucj1xcie9.execute-api.us-east-1.amazonaws.com/feedback',{"method": "GET"})
+    const data = await res.json()
+    //console.log(res);
+    return data
+
+}
+
   const addRoom = async (roomAdd) => {
     const res = await fetch('https://pjwctivbz3.execute-api.us-east-1.amazonaws.com/addRoom',{"method": "POST",
     "body": JSON.stringify({
@@ -72,10 +85,34 @@ const DeleteroomCallback = async (ID) =>{
 }
 
   return (
+    <div>
       <div>
     <AddRoom rooms={rooms} onAddroom={AddroomCallback} onEditroom={EditroomCallback} onDeleteroom={DeleteroomCallback} />
 
 
+      </div>
+      <div>
+            <table className="table table-bordered">
+        <thead>
+        <tr>
+            <th>User Name</th>
+            <th>Feedback</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        {feedback.length > 0 ? feedback.map((feedback) => (
+            // <ListRoom key={feedback.id} room={feedback} onEditroom={EditroomCallback} onDeleteroom={DeleteroomCallback}/>
+            <tr>
+                <td>{feedback.name}</td>
+                <td>{feedback.feedback}</td>
+            </tr>
+        )) : <tr>
+            <td colSpan="4">No rooms</td>
+        </tr>}
+        </tbody>
+    </table>
+      </div>
       </div>
   )
 }
