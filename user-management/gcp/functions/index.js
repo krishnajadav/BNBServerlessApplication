@@ -113,4 +113,23 @@ API.post("/verifySecurityQuestions", async (req, res) => {
 	});
 });
 
+API.get("/getUser", async (req, res) => {
+	const uid = req.query.uid;
+
+	// get user
+	const params = {
+		TableName: "serverless-project-users",
+		Key: {
+			uid: {
+				S: uid,
+			},
+		},
+	};
+	const user = await dynamodb.getItem(params).promise();
+	return res.json({
+		success: true,
+		user: AWS.DynamoDB.Converter.unmarshall(user.Item),
+	});
+});
+
 exports.api = functions.https.onRequest(API);

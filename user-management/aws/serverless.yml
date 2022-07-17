@@ -7,7 +7,17 @@ provider:
     region: ca-central-1
 
 functions:
-    api:
-        handler: handler.handler
+    generateCipher:
+        handler: handler.generateCipher
         events:
-            - httpApi: "*"
+            - http:
+                  path: /generateCipher
+                  method: POST
+                  cors: true
+    validateCipher:
+        handler: handler.validateCipher
+        events:
+            - http:
+                  path: /validateCipher
+                  method: POST
+                  cors: true
