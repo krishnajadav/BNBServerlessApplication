@@ -29,9 +29,6 @@ exports.registerUser = functions.auth.user().onCreate(async (user) => {
 			email: {
 				S: user.email,
 			},
-			displayName: {
-				S: user.displayName ? user.displayName : "",
-			},
 			cipherKeyNumber: {
 				N: Math.floor(Math.random() * 100).toString(),
 			},
@@ -58,12 +55,13 @@ API.post("/setSecurityQuestions", async (req, res) => {
 			ExpressionAttributeValues: {
 				":securityQuestions": AWS.DynamoDB.Converter.marshall({ securityQuestions }).securityQuestions,
 			},
-			ReturnValues: "UPDATED_NEW",
+			ReturnValues: "ALL_NEW",
 		};
-		await dynamodb.updateItem(params).promise();
+		const user = await dynamodb.updateItem(params).promise();
 		return res.json({
 			success: true,
 			message: "Security questions updated successfully",
+			user: AWS.DynamoDB.Converter.unmarshall(user.Attributes),
 		});
 	} catch (e) {
 		console.log(e);
