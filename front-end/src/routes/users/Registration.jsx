@@ -31,10 +31,10 @@ const Registration = () => {
 	});
 
 	const [loading, setLoading] = useState(false);
-	const [registrationComplete, setRegistrationComplete] = useState(true);
+	const [registrationComplete, setRegistrationComplete] = useState(false);
+	const [cipherKeyNumber, setCipherKeyNumber] = useState(-1);
 
-	let userId,
-		cipherKeyNumber = -1;
+	let userId;
 
 	const registerUser = async (e) => {
 		try {
@@ -76,8 +76,9 @@ const Registration = () => {
 						"Content-Type": "application/json",
 					},
 				});
-				cipherKeyNumber = secResponse.data.user.cipherKeyNumber;
+				setCipherKeyNumber(secResponse.data.user.cipherKeyNumber);
 				setLoading(false);
+				setRegistrationComplete(true);
 			}, 3000);
 		} catch (error) {
 			console.log(error);
@@ -247,37 +248,39 @@ const Registration = () => {
 					</>
 				)}
 
-				<>
-					<div className="row mt-5 text-success">
-						<div className="col">
-							<p>
-								You are successfully registered!
-								<br />
-							</p>
+				{registrationComplete && (
+					<>
+						<div className="row mt-5 text-success">
+							<div className="col">
+								<p>
+									You are successfully registered!
+									<br />
+								</p>
+							</div>
 						</div>
-					</div>
-					<div className="row mt-5">
-						<div className="col">
-							<p>
-								Your Cipher Key is <b>{cipherKeyNumber}</b>
-								<br />
-							</p>
+						<div className="row mt-5">
+							<div className="col">
+								<p>
+									Your Cipher Key is <b>{cipherKeyNumber}</b>
+									<br />
+								</p>
+							</div>
 						</div>
-					</div>
-					<div className="row mt-5">
-						<div className="col">
-							<button
-								type="button"
-								className="btn btn-primary"
-								onClick={() => {
-									navigate("/login");
-								}}
-							>
-								Login
-							</button>
+						<div className="row mt-5">
+							<div className="col">
+								<button
+									type="button"
+									className="btn btn-primary"
+									onClick={() => {
+										navigate("/login");
+									}}
+								>
+									Login
+								</button>
+							</div>
 						</div>
-					</div>
-				</>
+					</>
+				)}
 			</div>
 		</>
 	);
