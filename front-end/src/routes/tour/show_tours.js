@@ -36,10 +36,10 @@ function ShowTours(props) {
   }
 
   const bookTicket = async (item) => {
-    // if (!localStorage.getItem('user_id')) {
-    //   alert('Please login to book a ticket')
-    //   return;
-    // }
+    if (!localStorage.getItem('user_id')) {
+      alert('Please login to book a ticket')
+      return;
+    }
 
     const response = await axios.get('https://us-central1-peak-service-312506.cloudfunctions.net/create-ticket', {
       params: {

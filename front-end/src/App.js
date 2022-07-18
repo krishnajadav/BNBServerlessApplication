@@ -11,6 +11,7 @@ import Registration from "./routes/users/Registration";
 import Login from "./routes/users/Login";
 import ManageRoom from "./routes/AdminRoom/ManageRoom";
 import SearchRoom from "./routes/CustomerRoom/SearchRoom";
+import MyTickets from "./routes/tour/MyTickets";
 
 function App() {
 	return (
@@ -27,6 +28,7 @@ function App() {
 					<Route path="/" element={<Registration />}></Route>
 					<Route exact path="/manage_room" element={<ManageRoom/>}/>
           <Route exact path="/search_room" element={<SearchRoom/>}/>
+					<Route exact path="/my_tickets" element={<MyTickets />}></Route>
 				</Routes>
 			</BrowserRouter>
 		</div>
