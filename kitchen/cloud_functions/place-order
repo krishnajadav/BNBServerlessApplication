@@ -2,10 +2,13 @@ var AWS = require('aws-sdk');
 var easyinvoice = require('easyinvoice');
 const { v4: uuidv4 } = require('uuid');
 //var fs = require('fs');
+const cors = require('cors')({origin: true});
+const {PubSub} = require('@google-cloud/pubsub');
+const pubSubClient = new PubSub("ultra-mediator-352903");
 AWS.config.update({
-    accessKeyId: "ASIAZSJWKMQSPB44GBPR",
-    secretAccessKey: "qHG+pLiGVMly4HiOQYk1D0xLQL/TNBhorugBMrHn",
-    sessionToken: "FwoGZXIvYXdzEHUaDJQtlwh27kWnbOFjQCLAATe14DOvFqvy5vSzYJ53zsnWXvCErxWVT5kHHlHAQSsfSnLBjMfPYoA6fsGvNIHVc0v138c6HNlWRM/hTa1Z986VR9zY3gfT3Lkp8wPihvC3Z1/g5QATtJjjS/MeEGawcGTNbp4eqtfCnDzzwMSBYizbE1RZs6wIRp5ppesgOr2yDiL2eQVy+ZTchecsqnmDs75fpvD4OwBWotUlo53XSGkbhN368iJLZ/2eeOP25pmYBpxBxFNb8I6KNJ/izBMRvCjdssOWBjItEYaxg+6ongBiMCyLzBaY/VqMc2lGx/EJSzeAfX2YmWlOT3Qg/xl0N3zg18hG"
+    accessKeyId: "ASIAZSJWKMQSE7U43GW7",
+    secretAccessKey: "34qwY2y6DihNY3PdmwTJbvWJhqMOghiZFW0dP30L",
+    sessionToken: "FwoGZXIvYXdzELf//////////wEaDN/aU6UImZReISF9tSLAAfa10yRyl+DC1l/upwUqQb0WCtQuwHjcnvCy4X6Xd4/2tv5qVHoE9EFCKfEnyki6WlbXy1T6hKwwn+L+hdqDAVOTj0AtvaU2HVVXiwtaOx83lnacV8mjGKHYPEfs4s5YOR0UheV5ZcFF0mn0Gt1BqF2qN0YU6WnoF3mL8PW6fwuV655CS5LdSbOZq0WS7WfQcoDyJnsQxXSR7LTsgAWKGdDPOxG4xgi2Cwuuz24Qp/LbXt+/XSFBJIcgQtjAr9cczCj689GWBjItIX1vcWeJdiKb/GKq3Im6Jd7odDswazyT1mFeoZcmszCqpXS32mrdSlnz6HEd"
   });
 
 // Create the DynamoDB service object
@@ -19,6 +22,20 @@ var s3 = new AWS.S3({
     }
 });
 
+async function publishMessage(timedelay,orderId) {
+  // Publishes the message as a string, e.g. "Hello, world!" or JSON.stringify(someObject)
+  const dataBuffer = Buffer.from(timedelay+','+orderId);
+
+  try {
+    const messageId = await pubSubClient
+      .topic('projects/ultra-mediator-352903/topics/orderStatus')
+      .publishMessage({data: dataBuffer});
+    console.log(`Message ${messageId} published.`);
+  } catch (error) {
+    console.error(`Received error while publishing: ${error.message}`);
+    //process.exitCode = 1;
+  }
+}
 //function to create file in bucket
 async function createFile(data) {
     return new Promise(function(resolve, reject) {
@@ -107,7 +124,18 @@ async function putItemToDB(putparams) {
     });
 }
 exports.placeOrder = (req, res) => {
-  var now = new Date();
+   // cors(req, res, () => {
+       res.set('Access-Control-Allow-Origin', '*');
+var now = new Date();
+var maxtime =0;
+for(let i=0;i<req.body.orderItems.length;i++) {
+    if(req.body.orderItems[i].preparationTime>maxtime){
+        maxtime = req.body.orderItems[i].preparationTime;
+    }
+}
+var minutesToAdd=maxtime;
+var currentDate = new Date();
+var readyTime = new Date(currentDate.getTime() + minutesToAdd*60000);
 var orderId = uuidv4();
 var invoiceNumber=orderId.split('-')[0];
 var isSuccess = false;
@@ -120,11 +148,11 @@ var params = {
         'order': {
             S: JSON.stringify(req.body.orderItems)
         },
-        'orderPlacesTime': {
+        'orderPlacedTime': {
             S: now.toISOString()
         },
         'orderReadyTime': {
-            S: ''
+            S: readyTime.toISOString()
         },
         'orderDeliveredTime': {
             S: ''
@@ -143,14 +171,28 @@ var params = {
         }
     }
 };
-
+try {
 (async () => {
     isSuccess = await putItemToDB(params); //put item to DynamoDB with updated frequency value 
     await generateInvoice(req.body.orderItems,req.body.orderPlaceBy,invoiceNumber);
+    await publishMessage(minutesToAdd,orderId);
     if(isSuccess) {
-res.status(200).send(JSON.parse("{\"response\":\"Order Placed Successfully!\"}"));
+        res.setHeader("Content-Type", "application/json");
+        res.setHeader('Access-Control-Allow-Origin', "*");
+        res.setHeader('Access-Control-Allow-Methods', "*");
+        //res.set('Access-Control-Allow-Origin', '*');
+        res.send(JSON.parse( "{\"response\":\"Order Placed Successfully!\"}"));
 } else {
-    res.status(400).send(JSON.parse("{\"response\":\"There was some error while placing the order. Please try again after sometime.\"}"));
+        res.setHeader("Content-Type", "application/json");
+        res.setHeader('Access-Control-Allow-Origin', "*");
+        res.setHeader('Access-Control-Allow-Methods', "*");
+        //res.set('Access-Control-Allow-Origin', '*');
+        res.send(JSON.parse("{\"response\":\"There was some error while placing the order. Please try again after sometime.\"}"));
 }
 })();
+// })
+}catch (error) {
+    console.error(error);
+    //process.exitCode = 1;
+  }
 };
