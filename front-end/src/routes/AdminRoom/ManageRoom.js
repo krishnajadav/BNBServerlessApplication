@@ -102,7 +102,7 @@ const ManageRoom = () => {
             <tr>
               <th>User Name</th>
               <th>Feedback</th>
-
+              <th>Sentiment</th>
             </tr>
           </thead>
           <tbody>
@@ -111,9 +111,10 @@ const ManageRoom = () => {
               <tr>
                 <td>{feedback.name}</td>
                 <td>{feedback.feedback}</td>
+                <td>{feedback.sentiment}</td>
               </tr>
             )) : <tr>
-              <td colSpan="4">No rooms</td>
+              <td colSpan="4">No rooFeedbacksms</td>
             </tr>}
           </tbody>
         </table>

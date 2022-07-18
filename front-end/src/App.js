@@ -12,6 +12,7 @@ import Login from "./routes/users/Login";
 import ManageRoom from "./routes/AdminRoom/ManageRoom";
 import SearchRoom from "./routes/CustomerRoom/SearchRoom";
 import MyTickets from "./routes/tour/MyTickets";
+import Feedback from "./routes/CustomerRoom/FeedBack";
 
 function App() {
 	return (
@@ -26,8 +27,9 @@ function App() {
 					<Route path="/my_orders" element={<MyOrders />}></Route>
 					<Route path="/login" element={<Login />}></Route>
 					<Route path="/" element={<Registration />}></Route>
-					<Route exact path="/manage_room" element={<ManageRoom/>}/>
-          <Route exact path="/search_room" element={<SearchRoom/>}/>
+					<Route exact path="/manage_room" element={<ManageRoom />} />
+					<Route path="/feedback" element={<Feedback />} />
+					<Route exact path="/search_room" element={<SearchRoom />} />
 					<Route exact path="/my_tickets" element={<MyTickets />}></Route>
 				</Routes>
 			</BrowserRouter>
