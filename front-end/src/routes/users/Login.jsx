@@ -107,7 +107,7 @@ const Login = () => {
 			}
 
 			alert("Successfully logged in!");
-			navigate("/");
+			navigate("/home");
 		} catch (e) {
 			console.log(e);
 			alert("Multi Factor Auth Failed. Please try again.");
