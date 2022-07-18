@@ -5,6 +5,7 @@ import ShowTours from './routes/tours/show_tours';
 import BookingConfirmation from './routes/tours/booking_confirmation';
 import ManageRoom from './routes/AdminRoom/ManageRoom'
 import SearchRoom from './routes/CustomerRoom/SearchRoom'
+import CustomerReservationList from './routes/CustomerRoom/CustomerReservationList'
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route exact path="/" element={<SearchRoom/>}/>
           <Route exact path="/ManageRoom" element={<ManageRoom/>}/>
           <Route exact path="/SearchRoom" element={<SearchRoom/>}/>
+          <Route exact path="/CustomerReservationList" element={<CustomerReservationList/>}/>
           <Route path='/tours' element={<ShowTours />}></Route>
           <Route path='/booking_confirmation' element={<BookingConfirmation />}></Route>
         </Routes>
