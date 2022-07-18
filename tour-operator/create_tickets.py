@@ -4,10 +4,9 @@ from flask import jsonify
 
 dynamodb_client = boto3.client('dynamodb',
                                region_name='us-east-1',
-                               aws_access_key_id="ASIARR4VPHN4QZGXCGCK",
-                               aws_secret_access_key="YPF99cvDYR0dtvZOxc9Cz0x/SN02CC6HdOdPajjb",
-                               aws_session_token="FwoGZXIvYXdzELf//////////wEaDCYT8an08YlyTwBpbyLAAVueK1Kuzpkihb03ZqTZjhY2rG0C++vABHZ7JkTKABvtdcjUmtdxkp3ffkO9B68ipr7MBB/nO2LUgzUb/LbY3LTlelI3UkpEA3eUsZbojtNEc9RpgYSAnqlNYBTu69wK5yaVrGUsnAeDJtkaxHK7lUBKhN8q6q1c7Fkm5mYeywAvU0gszrM0zZ++PbdRfchrBePn1/Xx3QzitUcgoZTb6L4H0LWJEMEiowi2QZyMCEfhfCWANXKQuxOLCmZfjFtDESja8tGWBjIto2+ofoZcCGTkZQolz/91CNDtJJiPEQ7LYtNVK0UZx3YUB/4CNtA7PtLtFyjp")
-
+                               aws_access_key_id="ASIARR4VPHN43DJVOZZZ",
+                               aws_secret_access_key="WAF+TvcYKukrhdJZDNCeaIt5LvxanUbfy8tB8RY/",
+                               aws_session_token="FwoGZXIvYXdzEM7//////////wEaDF6PF5PJkESY9k5z/iLAAZ+FPv3YQaQle1mkEtwe5XLwWBq+2tHRygvp7UDDAruf79trhaMZyXsWqzsHU50l7VkrrsD/usozmpkBjWCMQuRJ5DZwkd6boa80impATVk25tlusG6drznjr3SelnSAlfc09nPEKPvfJk+LOzBt8B4rRpkBsD3MO6l6YwEpS6jKQ+aQSEdTdaGU7xvvXg/i7Jayv1PLn150/ANgndI7TFG7TsmZ7aXl4f+DSWM+/exJ5lUknPpNnfO4tqm08lCCYiiljdeWBjItdYw3gE/7lNogZ4wTIx6YU4BF1cS8GVN3fn6fF2bycanviHuLGQ9JojAluluE")
 
 TOUR_DETAILS_TABLE_NAME = "tour-details"
 TOUR_TICKETS_TABLE_NAME = "tour-tickets"
@@ -27,7 +26,7 @@ def function_handle(request):
     price = request_json.args.get('price')
 
     if not user_id or not place or not start_date or not end_date or not price:
-        return add_cors(jsonify( {
+        return add_cors(jsonify({
             "success": False,
             "message": "Please pass all required params"
         }))
@@ -36,7 +35,7 @@ def function_handle(request):
                                              Key={'place': {'S': str(place)}})
 
     if not len(place_details):
-        add_cors(jsonify( {
+        add_cors(jsonify({
             "success": False,
             "message": "Requested place is not in our database"
         }))

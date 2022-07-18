@@ -2,12 +2,11 @@ import boto3
 from boto3.dynamodb.conditions import Key
 from flask import jsonify
 
-dynamodb_client = boto3.resource('dynamodb',
+dynamodb_client = boto3.client('dynamodb',
                                region_name='us-east-1',
-                               aws_access_key_id="ASIARR4VPHN4TDE7QFEU",
-                               aws_secret_access_key="xDioLpjb52sOl6lh/cBEbNivs5bZ5x1IS2a/mHGZ",
-                               aws_session_token="FwoGZXIvYXdzELv//////////wEaDFNX+6UPR7NwPztFqSLAAe2rHFzaRX0rB+NOwDjqthqksOMUObPywHar4qWnj1gfC2+rCAh437WpL0irGFgy0JPX9QiSrXxZfVqyzSHb/9Jw5NNbMjLa+Qqbj7vVko630mtAp8qsOxYqz8hwzc9ORRwbksu2A3evBhp+0z4ch4Yo5Af4mnywhh7DvI7hyFTVixq7FecXI7GJgo1IldlGj/qwzdD/TEj9FkRcn6PhwXX3VdIUWP8v7II3JEgNhniWrAQw9mAQcggB/HJnXBCvjSiO79KWBjIt3pRHy1AQZo7hiw6zdwtywVPmqCbYmIBn9xe4ZXwFoqhwRHY7/osX7qIcrlNY"
-                               )
+                               aws_access_key_id="ASIARR4VPHN43DJVOZZZ",
+                               aws_secret_access_key="WAF+TvcYKukrhdJZDNCeaIt5LvxanUbfy8tB8RY/",
+                               aws_session_token="FwoGZXIvYXdzEM7//////////wEaDF6PF5PJkESY9k5z/iLAAZ+FPv3YQaQle1mkEtwe5XLwWBq+2tHRygvp7UDDAruf79trhaMZyXsWqzsHU50l7VkrrsD/usozmpkBjWCMQuRJ5DZwkd6boa80impATVk25tlusG6drznjr3SelnSAlfc09nPEKPvfJk+LOzBt8B4rRpkBsD3MO6l6YwEpS6jKQ+aQSEdTdaGU7xvvXg/i7Jayv1PLn150/ANgndI7TFG7TsmZ7aXl4f+DSWM+/exJ5lUknPpNnfO4tqm08lCCYiiljdeWBjItdYw3gE/7lNogZ4wTIx6YU4BF1cS8GVN3fn6fF2bycanviHuLGQ9JojAluluE")
 
 TOUR_DETAILS_TABLE_NAME = "tour-details"
 TOUR_TICKETS_TABLE_NAME = "tour-tickets"

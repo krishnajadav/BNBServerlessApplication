@@ -13,6 +13,7 @@ import ManageRoom from "./routes/AdminRoom/ManageRoom";
 import SearchRoom from "./routes/CustomerRoom/SearchRoom";
 import MyTickets from "./routes/tour/MyTickets";
 import Feedback from "./routes/CustomerRoom/FeedBack";
+import CustomerReservationList from './routes/CustomerRoom/CustomerReservationList'
 
 function App() {
 	return (
@@ -31,6 +32,7 @@ function App() {
 					<Route path="/feedback" element={<Feedback />} />
 					<Route exact path="/search_room" element={<SearchRoom />} />
 					<Route exact path="/my_tickets" element={<MyTickets />}></Route>
+					<Route exact path="/my_reservation" element={<CustomerReservationList />} />
 				</Routes>
 			</BrowserRouter>
 		</div>
