@@ -1,9 +1,10 @@
 var AWS = require('aws-sdk');
 AWS.config.update({
-    accessKeyId: "ASIAZSJWKMQSPB44GBPR",
-    secretAccessKey: "qHG+pLiGVMly4HiOQYk1D0xLQL/TNBhorugBMrHn",
-    sessionToken: "FwoGZXIvYXdzEHUaDJQtlwh27kWnbOFjQCLAATe14DOvFqvy5vSzYJ53zsnWXvCErxWVT5kHHlHAQSsfSnLBjMfPYoA6fsGvNIHVc0v138c6HNlWRM/hTa1Z986VR9zY3gfT3Lkp8wPihvC3Z1/g5QATtJjjS/MeEGawcGTNbp4eqtfCnDzzwMSBYizbE1RZs6wIRp5ppesgOr2yDiL2eQVy+ZTchecsqnmDs75fpvD4OwBWotUlo53XSGkbhN368iJLZ/2eeOP25pmYBpxBxFNb8I6KNJ/izBMRvCjdssOWBjItEYaxg+6ongBiMCyLzBaY/VqMc2lGx/EJSzeAfX2YmWlOT3Qg/xl0N3zg18hG"
+    accessKeyId: "ASIAZSJWKMQSE7U43GW7",
+    secretAccessKey: "34qwY2y6DihNY3PdmwTJbvWJhqMOghiZFW0dP30L",
+    sessionToken: "FwoGZXIvYXdzELf//////////wEaDN/aU6UImZReISF9tSLAAfa10yRyl+DC1l/upwUqQb0WCtQuwHjcnvCy4X6Xd4/2tv5qVHoE9EFCKfEnyki6WlbXy1T6hKwwn+L+hdqDAVOTj0AtvaU2HVVXiwtaOx83lnacV8mjGKHYPEfs4s5YOR0UheV5ZcFF0mn0Gt1BqF2qN0YU6WnoF3mL8PW6fwuV655CS5LdSbOZq0WS7WfQcoDyJnsQxXSR7LTsgAWKGdDPOxG4xgi2Cwuuz24Qp/LbXt+/XSFBJIcgQtjAr9cczCj689GWBjItIX1vcWeJdiKb/GKq3Im6Jd7odDswazyT1mFeoZcmszCqpXS32mrdSlnz6HEd"
   });
+
 
 // Create the DynamoDB service object
 var ddb = new AWS.DynamoDB({
@@ -28,9 +29,9 @@ async function getOrders(params) {
                    var orderPlacedBy =  "\"orderPlacedBy\":\"" +element.orderPlacedBy.S+"\",";
                    var order =  "\"order\":" +element.order.S+",";
                    var orderDeliveredTime =  "\"orderDeliveredTime\":\"" +element.orderDeliveredTime.S+"\",";
-                   var orderPlacesTime =  "\"orderPlacesTime\":\"" +element.orderPlacesTime.S+"\"";
+                   var orderPlacedTime =  "\"orderPlacesTime\":\"" +element.orderPlacedTime.S+"\"";
 
-                   var orderItem = orderCurrentStatus+orderReadyTime+total+orderPlacedBy+order+orderDeliveredTime+orderPlacesTime+"},";
+                   var orderItem = orderCurrentStatus+orderReadyTime+total+orderPlacedBy+order+orderDeliveredTime+orderPlacedTime+"},";
                     orders = orders + orderItem;
                   });
                   orders= orders.slice(0,-1);
@@ -55,7 +56,9 @@ const params = {
 
 (async () => {
     var orders = await getOrders(params); 
-  
+      res.setHeader("Content-Type", "application/json");
+       res.setHeader('Access-Control-Allow-Origin', "*");
+       res.setHeader('Access-Control-Allow-Methods', "*");
     res.status(200).send(orders);
 })();
 
