@@ -46,12 +46,12 @@ function ShowTours(props) {
         place: item.place,
         start_date: data.start_date,
         end_date: data.end_date,
-        price: price,
+        price: "100",
         user_id: localStorage.getItem('user_id')
       }
     })
 
-    if (response.data.Success) {
+    if (response.data.success) {
       alert("Ticket booked successfully")
     } else {
       alert(response.data.message)
