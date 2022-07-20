@@ -12,6 +12,7 @@ function Home(props) {
             <a href="/book_tour" type="button" className="btn btn-secondary">Tour</a>
             <a href="/invoices" type="button" className="btn btn-secondary">My Bills</a>
             <a href="/my_orders" type="button" className="btn btn-secondary">My Orders</a>
+            <a href="/my_reservation" type="button" className="btn btn-secondary">My Bookings</a>
           </div>
         </div>
       </div>

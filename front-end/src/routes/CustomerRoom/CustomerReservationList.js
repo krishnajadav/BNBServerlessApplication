@@ -6,6 +6,8 @@ function CustomerReservationList() {
     const [bookings,setbookings]=useState([])
     const [availablebookings,setavailablebookings]=useState([])
     const [rooms,setrooms]=useState([])
+    const userData = JSON.parse(localStorage.getItem("user"));
+    const sessionUserID =userData.userId;
 
     useEffect(() => {
         getAllBookings();
@@ -18,7 +20,7 @@ function CustomerReservationList() {
           while ( i --> 0 ) {
               BookingList[i].roomImageURL = "";
               BookingList[i].roomNo = "";
-              if(BookingList[i].customerId="1")
+              if(BookingList[i].customerId===sessionUserID)
               {
                   var c=availablebookings;
                   c.push(BookingList[i]);
@@ -56,9 +58,23 @@ function CustomerReservationList() {
       } 
 
   return (
-    <div>
-
-<table class="table table-bordered">
+    <div className="container mt-5">
+      <div className="row">
+        <div className="col-md-12">
+          <h1 className="text-center" >Serverless Project: Group-11</h1>
+          <div className="btn-group btn-group-lg w-100 mt-5" role="group" aria-label="Basic example">
+            <a href="/kitchen" type="button" className="btn btn-secondary">Kitchen</a>
+            <a href="/search_room" type="button" className="btn btn-secondary">Hotel</a>
+            <a href="/book_tour" type="button" className="btn btn-secondary">Tour</a>
+            <a href="/invoices" type="button" className="btn btn-secondary">My Bills</a>
+            <a href="/my_orders" type="button" className="btn btn-secondary">My Orders</a>
+            <a href="/my_reservation" type="button" className="btn btn-secondary">My Bookings</a>
+          </div>
+        </div>
+      </div><br/><br/>
+      <div className="row">
+        <div className="col-md-12">
+      <table class="table table-bordered">
     <thead>
       <tr>
        <th>Room No</th>
@@ -82,6 +98,8 @@ function CustomerReservationList() {
    ))}
     </tbody>
    </table>
+    </div>
+    </div>
     </div>
   )
 }
