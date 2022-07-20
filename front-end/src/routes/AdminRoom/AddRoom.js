@@ -13,7 +13,8 @@ const AddRoom = (props) => {
     const [noBeds,setnoBeds]=useState('')
     const [roomNo,setroomNo]=useState('')
     const [roomPrice,setroomPrice]=useState('')
-    const [file,setfile]=useState(null)
+    const [base64URL,setbase64URL]=useState('')
+    const [roomImageURL,setroomImageURL]=useState('')
 
     const onClick = (e) =>{
         e.preventDefault()
@@ -21,13 +22,11 @@ const AddRoom = (props) => {
         {
             if(id===0)
             {
-                onAddroom({id:rooms.length+1,roomAmenity:roomAmenity,noBeds:noBeds,roomNo:roomNo,roomPrice:roomPrice}); 
-                //const formData = new FormData();
-                //formData.append("myFile",file,file.name);   
+                onAddroom({id:rooms.length+1,roomAmenity:roomAmenity,noBeds:noBeds,roomNo:roomNo,roomPrice:roomPrice,roomImageFile:base64URL});
             }
             else
             {
-                onEditroom({id:id,roomAmenity:roomAmenity,noBeds:noBeds,roomNo:roomNo,roomPrice:roomPrice})
+                onEditroom({id:id,roomAmenity:roomAmenity,noBeds:noBeds,roomNo:roomNo,roomPrice:roomPrice,roomImageFile:base64URL,roomImageURL:roomImageURL})               
             }
             updateState({});
             Clearroom();
@@ -44,6 +43,7 @@ const AddRoom = (props) => {
         setroomNo(roomEdit.roomNo);
         setid(roomEdit.id);
         setroomPrice(roomEdit.roomPrice);
+        setroomImageURL(roomEdit.roomImageURL);
         setstatus('Edit');
     }
 
@@ -60,10 +60,21 @@ const AddRoom = (props) => {
         setid(0);
         setroomPrice('');
         setstatus('Add');
+        setbase64URL('');
     }
 
   return (
-      <div>
+    <div className="container mt-5">
+    <div className="row">
+      <div className="col-md-12">
+        <h1 className="text-center" >Serverless Project: Group-11</h1>
+
+        <div className="btn-group btn-group-lg w-100 mt-5" role="group" aria-label="Basic example">
+          <a href="/manage_room" type="button" className="btn btn-secondary">Manage Rooms</a>
+          <a href="/login" type="button" className="btn btn-secondary">Logout</a>
+        </div>
+      </div>
+    </div> <br/>
     <div className="row">
     <div className='col-md-6'>
     <div class="form-group">
@@ -75,17 +86,17 @@ const AddRoom = (props) => {
                 setroomNo(e.target.value)
              }
             }}/>
-    </div>
+    </div><br/>
     <div class="form-group">
         <label>Room Amenity:</label>
         <input type="text" class="form-control" id="roomAmenity" placeholder="room Amenity" value={roomAmenity} onChange={(e)=>{
-             const regularExpression = /^[A-Za-z0-9]*$/;
+             const regularExpression = /^[A-Za-z0-9 ]*$/;
              if (regularExpression.test(e.target.value))
              {
                 setroomAmenity(e.target.value)
              }
             }}/>
-    </div>
+    </div><br/>
     <div class="form-group">
         <label>No of Beds:</label>
         <input type="text" class="form-control" id="noBeds" placeholder="No of Beds" value={noBeds} onChange={(e)=>{
@@ -95,7 +106,7 @@ const AddRoom = (props) => {
                 setnoBeds(e.target.value)
              }
             }}/>
-    </div>
+    </div><br/>
     <div class="form-group">
         <label>Rent for 1 Day</label>
         <input type="text" class="form-control" id="roomPrice" placeholder="Price" value={roomPrice} onChange={(e)=>{
@@ -105,11 +116,17 @@ const AddRoom = (props) => {
                 setroomPrice(e.target.value)
              }
             }}/>
-    </div>
+    </div><br/>
     <div class="form-group">
         <label>Room Image</label>
-        <input type="file" class="form-control-file" id="roomImage" accept="image/*" onChange={(e)=>{setfile(e.target.files[0])}}/>
-    </div>
+        <input type="file" class="form-control-file" id="roomImage" accept="image/*" onChange={(e)=>{         
+            let reader = new FileReader();
+            reader.readAsDataURL(e.target.files[0]);
+            reader.onload =  function () {
+                 setbase64URL(reader.result)
+            };   
+            }}/>
+    </div><br/>
         <input type='submit' onClick={onClick} className="btn btn-success" style={{"marginRight": "5px"}} value={Status}/><button className='btn btn-primary' onClick={Clearroom}>Clear</button>
     </div></div>
 
@@ -121,6 +138,7 @@ const AddRoom = (props) => {
         <th>Room Amenity</th>
         <th>No of Beds</th>
         <th>Rent for 1 Day</th>
+        <th>Image</th>
         <th>Action</th>
       </tr>
     </thead>
