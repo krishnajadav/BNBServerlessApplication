@@ -11,7 +11,6 @@ export default function Feedback() {
         setFormValue({ ...formValue, [name]: value });
     };
 
-
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -40,14 +39,17 @@ export default function Feedback() {
                         feedtype = "Neutral";
                     }
                 }
-                var random_id = Math.floor(Math.random() * 1000);
-                random_id = random_id.toString();
-
+            
+                
+                const localget = localStorage.getItem("user")
+                const jsonformat = JSON.parse(localget);
+                
                 const form_data = {
-                    "id": random_id,
-                    "name": "dharmay",
-                    "email": "dharmay@sureja.com",
-                    "mobileno": "9409434188",
+
+                    "id": jsonformat.userId,
+                    "name": jsonformat.displayName,
+                    "email": jsonformat.email,
+                    "mobileno": "0123456789",
                     "feedback": formValue.feedback,
                     "sentiment": feedtype,
                 };
@@ -65,7 +67,8 @@ export default function Feedback() {
                         if (response.status === 200) {
                             console.log(response.data.status);
                             // window.location.href = "/profilelist";
-                            alert("Thank you for submitting Feedback")
+                            alert("Thank you for submitting Feedback");
+                            window.location.reload();
                         }
 
                     }).catch(function (error) {
@@ -87,14 +90,16 @@ export default function Feedback() {
 
     return (
         <div>
+            <br/>
+            <center>
             <div class="container-sm" >
                 <h1>Your feedback is important to us</h1>
                 <form onSubmit={handleSubmit}>
                     <div>
                         <br />
                         <label><b>
-                            Feedback &nbsp; &nbsp;
-                            <input type="text" name="feedback" value={formValue.feedback} onChange={handleChange} required /></b>
+                            Please write your Feedback below &nbsp; &nbsp;
+                            <input type="text" name="feedback" class="form-control" value={formValue.feedback} onChange={handleChange} required /></b>
                         </label>
                     </div>
                     <div>
@@ -104,7 +109,7 @@ export default function Feedback() {
                 </form>
 
             </div>
-
+            </center>
         </div>
     )
 

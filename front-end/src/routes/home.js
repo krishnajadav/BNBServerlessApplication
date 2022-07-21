@@ -13,6 +13,8 @@ function Home(props) {
             <a href="/invoices" type="button" className="btn btn-secondary">My Bills</a>
             <a href="/my_orders" type="button" className="btn btn-secondary">My Orders</a>
             <a href="/my_reservation" type="button" className="btn btn-secondary">My Bookings</a>
+            <a href="/feedback" type="button" className="btn btn-secondary">Write FeedBack</a>
+            <a href="/userfeedback" type="button" className="btn btn-secondary">See FeedBacks</a>
           </div>
         </div>
       </div>
