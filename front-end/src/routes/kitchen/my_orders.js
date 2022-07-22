@@ -38,6 +38,7 @@ function MyOrders(props) {
                     <p className="card-text">
                       <strong>Order Placed By:</strong> {order.orderPlacedBy}<br />
                       <strong>Order Placed On:</strong> {order.orderPlacesTime}<br />
+                      <strong>Order Placed On:</strong> {order.orderReadyTime}<br />
                       <strong>Order Total:</strong> {order.total}<br />
                       <strong>Order Items:</strong>
                       {

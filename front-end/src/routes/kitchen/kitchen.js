@@ -5,10 +5,12 @@ function Kitchen(Props) {
 
   const [menu, setMenu] = useState([])
   const [order, setOrder] = useState([])
+  const [images, setImages] = useState({});
 
   const getMenu = async () => {
     const response = await axios.get('https://getmenunew-2ipzjcv5.ue.gateway.dev/get-breakfast-menu')
     setMenu(response.data.menu)
+    getItemImage(menu)
   }
 
   useEffect(() => {
@@ -47,12 +49,24 @@ function Kitchen(Props) {
     const response = await axios.post('https://addordersnew-2ipzjcv5.ue.gateway.dev/place-order', {
       orderItems: order,
       "orderPlaceBy": user.email,
-      "firstName": "Manali",
-      "lastName": "Shah",
+      "firstName": user.displayName,
+      "lastName": "",
       "total": order.reduce((acc, cur) => acc + cur.price * cur.quantity, 0)
     })
+    alert(`Order placed successfully`)
     // clear order
     setOrder([])
+  }
+
+  const getItemImage = async (menu) => {
+    let temp = {}
+    console.log(menu)
+    for (let i = 0; i < menu.length; i++) {
+      const response = await axios.get(`https://4obu5002e0.execute-api.us-east-1.amazonaws.com/dev/getitemimg?id=${menu[i].id}`)
+      temp[menu[i].id] = response.data.url;
+    }
+    console.log(temp)
+    setImages(temp)
   }
 
   return (
@@ -64,7 +78,7 @@ function Kitchen(Props) {
             return (
               <div className="col-md-4">
                 <div className="card">
-                  <img className="card-img-top" src={item.image} alt={item.name} />
+                  <img className="card-img-top" src={images[item.id]} alt={item.name} />
                   <div className="card-body">
                     <h5 className="card-title">{item.name}</h5>
                     <p className="card-text">{item.price}$</p>
@@ -106,9 +120,10 @@ function Kitchen(Props) {
           }
         </div>
       </div>
-      <div className="mt-5">
-        <button className="btn btn-primary" onClick={(e) => placeOrder()} >Place Order</button>
-      </div>
+      {order.length > 0 &&
+        <div className="mt-5">
+          <button className="btn btn-primary" onClick={(e) => placeOrder()} >Place Order</button>
+        </div>}
     </div>
   )
 }
