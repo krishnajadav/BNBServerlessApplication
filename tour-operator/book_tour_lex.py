@@ -11,20 +11,21 @@ http = urllib3.PoolManager()
 def lambda_handler(event, context):
     intent = (event['sessionState']['intent']['name'])
 
+    if intent == "tour":
+        return book_tour(event)
+
+
+def book_tour(event):
     user_email = (event['sessionState']['intent']['slots']
                   ['user_email']['value']['originalValue'])
     from_date = (event['sessionState']['intent']['slots']
                  ['from_date']['value']['originalValue'])
-                 
+
     To_date = (event['sessionState']['intent']['slots']
                ['To_date']['value']['originalValue'])
     place = (event['sessionState']['intent']['slots']
              ['place']['value']['originalValue'])
 
-    return book_tour(from_date, To_date, place, user_email)
-
-
-def book_tour(from_date, To_date, place, user_email):
     try:
         from_date_obj = datetime.strptime(from_date, "%d-%m-%Y")
         to_date_obj = datetime.strptime(To_date, "%d-%m-%Y")

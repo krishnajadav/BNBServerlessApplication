@@ -5,14 +5,22 @@ function Invoices(props) {
 
   const [invoices, setInvoices] = useState([]);
 
-  const getInvoices = async () => {
-    const response = await axios.get(`https://k15skxig3b.execute-api.us-east-1.amazonaws.com/dev/getinvoices?id=${"manali.s0106@gmail.com"}`);
+  const getInvoices = async (email) => {
+    const response = await axios.get(`https://k15skxig3b.execute-api.us-east-1.amazonaws.com/dev/getinvoices?id=${email}`);
     setInvoices(response.data.invoices);
     console.log(response.data.invoices)
   }
 
   useEffect(() => {
-    getInvoices();
+    let user = localStorage.getItem("user");
+
+    if (!user) {
+      alert('Please login to view your tickets');
+      return;
+    }
+
+    user = JSON.parse(user);
+    getInvoices(user.email);
   }, [])
 
   return (

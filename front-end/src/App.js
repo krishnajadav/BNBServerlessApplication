@@ -8,7 +8,7 @@ import Kitchen from "./routes/kitchen/kitchen";
 import Invoices from "./routes/kitchen/invoices";
 import MyOrders from "./routes/kitchen/my_orders";
 import Registration from "./routes/users/Registration";
-import Login from "./routes/users/Login";
+import {Login} from "./routes/users/Login";
 import ManageRoom from "./routes/AdminRoom/ManageRoom";
 import SearchRoom from "./routes/CustomerRoom/SearchRoom";
 import MyTickets from "./routes/tour/MyTickets";

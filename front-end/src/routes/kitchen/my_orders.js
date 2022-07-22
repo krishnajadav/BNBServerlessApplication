@@ -4,15 +4,23 @@ import { useEffect, useState } from "react"
 function MyOrders(props) {
   const [orders, setOrders] = useState([]);
 
-  const getOrders = async () => {
-    const response = await axios.get("https://get-order-2ipzjcv5.uc.gateway.dev/get-order?orderPlacedBy=manali.s0106@gmail.com");
+  const getOrders = async (email) => {
+    const response = await axios.get(`https://get-order-2ipzjcv5.uc.gateway.dev/get-order?orderPlacedBy=${email}`);
     setOrders(response.data.orders);
     console.log(response.data.orders);
   }
 
 
   useEffect(() => {
-    getOrders();
+    let user = localStorage.getItem("user");
+
+    if (!user) {
+      alert('Please login to view your tickets');
+      return;
+    }
+    user = JSON.parse(user);
+
+    getOrders(user.email);
   }, []);
 
 

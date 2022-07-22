@@ -36,14 +36,21 @@ function Kitchen(Props) {
   }
 
   const placeOrder = async () => {
+    let user = localStorage.getItem("user");
+
+    if (!user) {
+      alert('Please login to view your tickets');
+      return;
+    }
+    user = JSON.parse(user);
+
     const response = await axios.post('https://addordersnew-2ipzjcv5.ue.gateway.dev/place-order', {
       orderItems: order,
-      "orderPlaceBy": "manali.s0106@gmail.com",
+      "orderPlaceBy": user.email,
       "firstName": "Manali",
       "lastName": "Shah",
       "total": order.reduce((acc, cur) => acc + cur.price * cur.quantity, 0)
     })
-    console.log(response.data)
     // clear order
     setOrder([])
   }
