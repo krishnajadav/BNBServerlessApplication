@@ -68,6 +68,7 @@ def predict_tabular_classification_sample(
 
     # return predictions
 
+
 def predict_price(days, place):
     data = predict_tabular_classification_sample(
         project="702829149860",
@@ -88,12 +89,20 @@ def predict_price(days, place):
 
     return res
 
+
 def function_handle(request):
     days = request.args.get('days')
     place = request.args.get('place')
-    data = predict_price(days, place)
 
-    return addCors(jsonify({
-        "success": True,
-        "data": dict(data)
-    }))
+    try:
+        data = predict_price(days, place)
+
+        return addCors(jsonify({
+            "success": True,
+            "data": dict(data)
+        }))
+    except:
+        return addCors(jsonify({
+            "success": False,
+            "data": "Invalid details"
+        }))
