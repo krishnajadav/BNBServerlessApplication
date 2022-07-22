@@ -12,11 +12,15 @@ function Home(props) {
             <a href="/book_tour" type="button" className="btn btn-secondary">Tour</a>
             <a href="/invoices" type="button" className="btn btn-secondary">My Bills</a>
             <a href="/my_orders" type="button" className="btn btn-secondary">My Orders</a>
-            <a href="/my_reservation" type="button" className="btn btn-secondary">My Room Bookings</a>
+          </div>
+          <div className="btn-group btn-group-lg w-100 mt-5" role="group" aria-label="Basic example">
+          <a href="/my_reservation" type="button" className="btn btn-secondary">My Room Bookings</a>
             <a href="/feedback" type="button" className="btn btn-secondary">Write FeedBack</a>
             <a href="/my_tickets" type="button" className="btn btn-secondary">My tour bookings</a>
             <a href="/userfeedback" type="button" className="btn btn-secondary">See FeedBacks</a>
+            <a href="/data_visualization" type="button" className="btn btn-secondary">See Data visualization</a>
           </div>
+
         </div>
       </div>
     </div>
