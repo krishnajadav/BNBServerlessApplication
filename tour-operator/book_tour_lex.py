@@ -9,26 +9,21 @@ http = urllib3.PoolManager()
 
 
 def lambda_handler(event, context):
-    intent = (event['sessionState']['intent']['name'])
+    # intent = (event['sessionState']['intent']['name'])
 
-    if intent == "tour":
-        return book_tour(event)
+    return book_tour(event)
 
 
 def book_tour(event):
-    user_email = (event['sessionState']['intent']['slots']
-                  ['user_email']['value']['originalValue'])
-    from_date = (event['sessionState']['intent']['slots']
-                 ['from_date']['value']['originalValue'])
 
-    To_date = (event['sessionState']['intent']['slots']
-               ['To_date']['value']['originalValue'])
-    place = (event['sessionState']['intent']['slots']
-             ['place']['value']['originalValue'])
+    user_email = (event['currentIntent']['slots']['user_email'])
+    from_date = (event['currentIntent']['slots']['from_date'])
+    To_date = (event['currentIntent']['slots']['To_date'])
+    place = (event['currentIntent']['slots']['place'])
 
     try:
-        from_date_obj = datetime.strptime(from_date, "%d-%m-%Y")
-        to_date_obj = datetime.strptime(To_date, "%d-%m-%Y")
+        from_date_obj = datetime.strptime(from_date, "%Y-%m-%d")
+        to_date_obj = datetime.strptime(To_date, "%Y-%m-%d")
         days = (to_date_obj - from_date_obj).days
 
         predict_data = http.request(
@@ -38,46 +33,31 @@ def book_tour(event):
         scores = predict_data["scores"]
         index = scores[index(max(scores))]
         price = predict_data["price"][index]
+        # price = "100"
 
         book_ticket = http.request(
             "GET", url=f"https://us-central1-peak-service-312506.cloudfunctions.net/create-ticket?place={place}&start_date={from_date}&end_date={To_date}&price={price}&user_id={user_email}")
 
         return {
-            "messages": [
-                {
-                    "content": f"Ticket booked with price {price}",
-                    "contentType": "PlainText"
-                }
-            ],
-            "sessionState": {
-                "dialogAction": {
-                    "type": "Close"
+            "dialogAction": {
+                "type": "Close",
+                "fulfillmentState": "Fulfilled",
+                "message": {
+                    "contentType": "PlainText",
+                    "content": "The Tour Booked Successfully. Thank you!"
                 },
-                "intent": {
-                    "name": "kitchen",
-                    "state": "Fulfilled",
-                    "confirmationState": "None"
-                }
             }
         }
 
     except Exception as e:
         print(e)
         return {
-            "messages": [
-                {
-                    "content": "Something went wrong ! Please provide valid details",
-                    "contentType": "PlainText"
-                }
-            ],
-            "sessionState": {
-                "dialogAction": {
-                    "type": "Close"
+            "dialogAction": {
+                "type": "Close",
+                "fulfillmentState": "Fulfilled",
+                "message": {
+                    "contentType": "PlainText",
+                    "content": "Something went wrong. Please proceed again!"
                 },
-                "intent": {
-                    "name": "kitchen",
-                    "state": "Fulfilled",
-                    "confirmationState": "None"
-                }
             }
         }
