@@ -88,8 +88,8 @@ function MyOrders(props) {
                       <a style={{color:"green"}}><strong>Order Status:</strong> {order.orderCurrentStatus}</a><br />
                       
                       <strong>Order Placed By:</strong> {order.orderPlacedBy}<br />
-                      <strong>Order Placed On:</strong> {order.orderPlacesTime}<br />
-                      <strong>Order Placed On:</strong> {order.orderReadyTime}<br />
+                      <strong>Order Placed On:</strong> {order.orderPlacesTime.split('T')[0]+ " "+order.orderPlacesTime.split('T')[1].split(':')[0]+":"+order.orderPlacesTime.split(':')[1]}<br />
+                      <strong>Order Ready On:</strong> {order.orderReadyTime.split('T')[0]+ " "+order.orderReadyTime.split('T')[1].split(':')[0]+":"+order.orderReadyTime.split(':')[1]}<br />
                       <strong>Order Total:</strong> {order.total}<br />
                       <strong>Order Items:</strong>
                       {
