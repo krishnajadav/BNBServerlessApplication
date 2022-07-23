@@ -14,8 +14,9 @@ import SearchRoom from "./routes/CustomerRoom/SearchRoom";
 import MyTickets from "./routes/tour/MyTickets";
 import Feedback from "./routes/FeedBack/FeedBack";
 import UserFeedback from "./routes/FeedBack/UserFeedback";
-import CustomerReservationList from './routes/CustomerRoom/CustomerReservationList'
+import CustomerReservationList from "./routes/CustomerRoom/CustomerReservationList";
 import DataVisualization from "./routes/visualization/data_visualization";
+import Report from "./routes/users/Report";
 
 function App() {
 	return (
@@ -31,12 +32,27 @@ function App() {
 					<Route path="/login" element={<Login />}></Route>
 					<Route path="/" element={<Registration />}></Route>
 					<Route exact path="/manage_room" element={<ManageRoom />} />
-					<Route path="/feedback" element={<div><Home /> <Feedback /></div>} />
-					<Route path="/userfeedback" element={<div><Home /> <UserFeedback /></div>} />
+					<Route
+						path="/feedback"
+						element={
+							<div>
+								<Home /> <Feedback />
+							</div>
+						}
+					/>
+					<Route
+						path="/userfeedback"
+						element={
+							<div>
+								<Home /> <UserFeedback />
+							</div>
+						}
+					/>
 					<Route exact path="/search_room" element={<SearchRoom />} />
 					<Route exact path="/my_tickets" element={<MyTickets />}></Route>
 					<Route exact path="/my_reservation" element={<CustomerReservationList />} />
 					<Route exact path="/data_visualization" element={<DataVisualization />} />
+					<Route exact path="/report" element={<Report />} />
 				</Routes>
 			</BrowserRouter>
 		</div>

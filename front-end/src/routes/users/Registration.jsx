@@ -90,8 +90,8 @@ const Registration = () => {
 	return (
 		<>
 			<div className="container overflow-hidden">
-				<div className="row mt-4">
-					<div className="col-12">
+				<div className="row mt-4 ">
+					<div className="col-12 offset-5">
 						<h3>Registration</h3>
 					</div>
 				</div>

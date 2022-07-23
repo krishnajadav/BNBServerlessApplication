@@ -122,7 +122,7 @@ const Login = () => {
 		<>
 			<div className="container overflow-hidden">
 				<div className="row mt-4">
-					<div className="col-12">
+					<div className="col-12 offset-5">
 						<h3>Login</h3>
 					</div>
 				</div>
