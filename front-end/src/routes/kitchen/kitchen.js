@@ -1,16 +1,17 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom";
 
 function Kitchen(Props) {
 
   const [menu, setMenu] = useState([])
   const [order, setOrder] = useState([])
   const [images, setImages] = useState({});
-
+  const navigate = useNavigate();
   const getMenu = async () => {
     const response = await axios.get('https://getmenunew-2ipzjcv5.ue.gateway.dev/get-breakfast-menu')
     setMenu(response.data.menu)
-    getItemImage(menu)
+    getItemImage(response.data.menu)
   }
 
   useEffect(() => {
@@ -41,7 +42,7 @@ function Kitchen(Props) {
     let user = localStorage.getItem("user");
 
     if (!user) {
-      alert('Please login to view your tickets');
+      alert('Please login to place order');
       return;
     }
     user = JSON.parse(user);
@@ -56,6 +57,7 @@ function Kitchen(Props) {
     alert(`Order placed successfully`)
     // clear order
     setOrder([])
+    navigate("/my_orders")
   }
 
   const getItemImage = async (menu) => {
@@ -65,20 +67,66 @@ function Kitchen(Props) {
       const response = await axios.get(`https://4obu5002e0.execute-api.us-east-1.amazonaws.com/dev/getitemimg?id=${menu[i].id}`)
       temp[menu[i].id] = response.data.url;
     }
-    console.log(temp)
+    console.log("temp"+temp)
     setImages(temp)
   }
 
   return (
     <div className="container">
+      <div className="container mt-5">
+			{/* Add button group  */}
+			<div className="row">
+				<div className="col-md-12">
+					<h1 className="text-center">Serverless Project: Group-11</h1>
+
+					<div className="btn-group btn-group-lg w-100 mt-5" role="group" aria-label="Basic example">
+						<a href="/kitchen" type="button" className="btn btn-secondary">
+							Kitchen
+						</a>
+						<a href="/search_room" type="button" className="btn btn-secondary">
+							Hotel
+						</a>
+						<a href="/book_tour" type="button" className="btn btn-secondary">
+							Tour
+						</a>
+						<a href="/invoices" type="button" className="btn btn-secondary">
+							My Bills
+						</a>
+						<a href="/my_orders" type="button" className="btn btn-secondary">
+							My Orders
+						</a>
+					</div>
+					<div className="btn-group btn-group-lg w-100 mt-5" role="group" aria-label="Basic example">
+						<a href="/my_reservation" type="button" className="btn btn-secondary">
+							My Room Bookings
+						</a>
+						<a href="/feedback" type="button" className="btn btn-secondary">
+							Write FeedBack
+						</a>
+						<a href="/my_tickets" type="button" className="btn btn-secondary">
+							My tour bookings
+						</a>
+						<a href="/userfeedback" type="button" className="btn btn-secondary">
+							See FeedBacks
+						</a>
+						<a href="/data_visualization" type="button" className="btn btn-secondary">
+							See Data visualization
+						</a>
+						<a href="/report" type="button" className="btn btn-secondary">
+							Access Report
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
       <h1 className="text-center mt-2">Kitchen</h1>
       <div className="row">
         {
           menu.map((item, index) => {
             return (
-              <div className="col-md-4">
+              <div className="col-md-3">
                 <div className="card">
-                  <img className="card-img-top" src={images[item.id]} alt={item.name} />
+                  <img className="card-img-top" src={images[item.id]} style={{height:"200px"}} alt={item.name} />
                   <div className="card-body">
                     <h5 className="card-title">{item.name}</h5>
                     <p className="card-text">{item.price}$</p>
@@ -100,9 +148,9 @@ function Kitchen(Props) {
           {
             order.map((item, index) => {
               return (
-                <div className="col-md-4">
+                <div className="col-md-3">
                   <div className="card">
-                    <img className="card-img-top" src={item.image} alt={item.name} />
+                    <img className="card-img-top" src={images[item.id]} style={{height:"200px"}} alt={item.name} />
                     <div className="card-body">
                       <h5 className="card-title">{item.name}</h5>
                       <p className="card-text">Price : {item.price}$</p>
