@@ -3,9 +3,9 @@ from flask import jsonify
 
 dynamodb_client = boto3.client('dynamodb',
                                region_name='us-east-1',
-                               aws_access_key_id="ASIARR4VPHN4SALQXZHF",
-                               aws_secret_access_key="2jLWbghe+KSbjbI3EFOjDBDNCsFWgGWs60TAmuNi",
-                               aws_session_token="FwoGZXIvYXdzEC4aDDdC3M+YKX6n28hcBSLAAS2zi2kb3sMdmG/Ik7eN0JT+u4LmtxclkcSkQCwpRi0KMse6kCBIkVS5GNPQ/8Rhbd9vZwQ+KV1DqHlp+PGj8HLcPoNzKSTJK2hWWfRp0lx9pVMYz41MlGjxIZk0defH46w8zg0V1zydaBEHrxKBeO2pKsLEpAyvTINyY6daEuaDo8L4Q3CdI5yM4r9FtcLvoygIiVtwDkU/sbgE6URAvwTLVC77kEXPmqyQHIzR8SX0Ms35v45ysSSUHhdhlJtDaiiEkuyWBjItmE245BEBmyNxdD9mFe7xlwCFQjxoUWal33RbhMQDzgGrqExD3HRnOiJAyNGM")
+                               aws_access_key_id="ASIARR4VPHN4QBDGKQ6A",
+                               aws_secret_access_key="1tDeNICiSAN+rgE4Em+UK0NBcH/L0V7aRSelWVWv",
+                               aws_session_token="FwoGZXIvYXdzEEUaDCM4xMOf50O7Ka+NOyLAAQmOC91N3fgao9J4eXIZWI3z5LJZX0Nd8K3p3ySdH9p4zeJ8uIZui8R3NHN8UUJdntUatbAFP/Iz0O1yqQCF4jC7wPHYfcNBPemW7q2AswvJTeyC+nSxYiXEd/n6N4EtGgFkiIRRsI6yA9MOW3Lof6J/Kpx+h47AXL0wNS6090EPiRfSGZZCMDTxxz8smjf89crPcahmTrlH0sSv6oS3Pw958AsTIDRP+MKUjRCpRA3u4tMnUTdez7UFdDX5gae5OCjUjPGWBjItLMqM2tdP+oW5VbV0PL+tGnaQM8f9+xC13gnOKEw1eASF6ETqwbqjoLDmVhRI")
 
 TOUR_DETAILS_TABLE_NAME = 'tour-details'
 

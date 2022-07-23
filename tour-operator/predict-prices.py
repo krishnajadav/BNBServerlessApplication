@@ -72,7 +72,7 @@ def predict_tabular_classification_sample(
 def predict_price(days, place):
     data = predict_tabular_classification_sample(
         project="702829149860",
-        endpoint_id="9055287495293403136",
+        endpoint_id="5282783935556747264",
         location="us-central1",
         instance_dict={"Days": str(days), "City": place}
     )
