@@ -44,7 +44,7 @@ function App() {
 						path="/userfeedback"
 						element={
 							<div>
-								<Home /> <UserFeedback />
+								 <UserFeedback />
 							</div>
 						}
 					/>

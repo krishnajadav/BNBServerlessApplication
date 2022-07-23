@@ -26,8 +26,21 @@ const UserFeedback = () => {
 
   return (
     <div  className="container mt-4">
-    
-      
+      <div className="col-md-12">
+        <h1 className="text-center" >Serverless Project: Group-11</h1>
+
+        <div className="btn-group btn-group-lg w-100 mt-5" role="group" aria-label="Basic example">
+          <a href="/manage_room" type="button" className="btn btn-secondary">Manage Rooms</a>
+          <a href="/userfeedback" type="button" className="btn btn-secondary">
+							See FeedBacks
+						</a>
+						<a href="/data_visualization" type="button" className="btn btn-secondary">
+							See Data visualization
+						</a>
+          <a href="/login" type="button" className="btn btn-secondary">Logout</a>
+        </div>
+      </div>
+      <br/>
         <table className="table table-bordered table-hover" >
           <thead class="table-success">
             <tr>

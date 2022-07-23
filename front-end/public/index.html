@@ -34,26 +34,27 @@
 
 <body>
   <noscript>You need to enable JavaScript to run this app.</noscript>
-  <script src="https://d3vc8dg9ybh4gt.cloudfront.net/lex-web-ui-loader.min.js"></script>
-<script>
-  var loaderOpts = {
-    baseUrl: 'https://d3vc8dg9ybh4gt.cloudfront.net/',
-    shouldLoadMinDeps: true
-  };
-  var loader = new ChatBotUiLoader.IframeLoader(loaderOpts);
-  var chatbotUiConfig = {
-          /* Example of setting session attributes on parent page
-          lex: {
-            sessionAttributes: {
-              userAgent: navigator.userAgent,
-              QNAClientFilter: ''
+  <script src="https://d1ucrjdhd852q5.cloudfront.net/lex-web-ui-loader.min.js"></script>
+  <script>
+    var loaderOpts = {
+      baseUrl: 'https://d1ucrjdhd852q5.cloudfront.net/',
+      shouldLoadMinDeps: true
+    };
+    var loader = new ChatBotUiLoader.IframeLoader(loaderOpts);
+    var chatbotUiConfig = {
+            /* Example of setting session attributes on parent page
+            lex: {
+              sessionAttributes: {
+                userAgent: navigator.userAgent,
+                QNAClientFilter: ''
+              }
             }
-          }
-          */
-        };
-  loader.load(chatbotUiConfig)
-    .catch(function (error) { console.error(error); });
-</script>
+            */
+          };
+    loader.load(chatbotUiConfig)
+      .catch(function (error) { console.error(error); });
+  </script>
+  
   
   <div id="root"></div>
   <!--
