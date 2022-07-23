@@ -32,6 +32,9 @@ exports.registerUser = functions.auth.user().onCreate(async (user) => {
 			cipherKeyNumber: {
 				N: Math.floor(Math.random() * 10).toString(),
 			},
+			createdAt: {
+				S: new Date().toISOString(),
+			},
 		},
 	};
 	return dynamodb.putItem(params).promise();
@@ -107,6 +110,28 @@ API.post("/verifySecurityQuestions", async (req, res) => {
 		}
 	}
 
+	const docClient = new AWS.DynamoDB.DocumentClient({
+		region: "ca-central-1",
+	});
+
+	const unUser = AWS.DynamoDB.Converter.unmarshall(user.Item);
+	const loginLogs = unUser.loginLog ? unUser.loginLog : [];
+	loginLogs.push(new Date().toISOString());
+
+	// add user login log
+	const params3 = {
+		TableName: "serverless-project-users",
+		Key: {
+			uid,
+		},
+		UpdateExpression: "set loginLog = :loginLog",
+		ExpressionAttributeValues: {
+			":loginLog": loginLogs,
+		},
+		ReturnValues: "ALL_NEW",
+	};
+	await docClient.update(params3).promise();
+
 	return res.json({
 		success: true,
 		message: "Security questions match",
@@ -156,6 +181,31 @@ API.get("/generateUsers", async (req, res) => {
 	return res.json({
 		success: true,
 		message: "Users generated successfully",
+	});
+});
+
+API.get("/loginUser", async (req, res) => {
+	const userId = req.query.userId;
+
+	// add user login log
+	const params = {
+		TableName: "serverless-project-users",
+		Key: {
+			uid: {
+				S: userId,
+			},
+		},
+		UpdateExpression: "set loginLog = list_append(loginLog, :loginLog)",
+		ExpressionAttributeValues: {
+			":loginLog": AWS.DynamoDB.Converter.marshall({
+				loginAt: new Date().toISOString(),
+			}),
+		},
+		ReturnValues: "ALL_NEW",
+	};
+	await dynamodb.updateItem(params).promise();
+	return res.json({
+		success: true,
 	});
 });
 
