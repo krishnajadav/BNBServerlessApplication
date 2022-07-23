@@ -30,7 +30,10 @@ exports.registerUser = functions.auth.user().onCreate(async (user) => {
 				S: user.email,
 			},
 			cipherKeyNumber: {
-				N: Math.floor(Math.random() * 100).toString(),
+				N: Math.floor(Math.random() * 10).toString(),
+			},
+			createdAt: {
+				S: new Date().toISOString(),
 			},
 		},
 	};
@@ -107,6 +110,28 @@ API.post("/verifySecurityQuestions", async (req, res) => {
 		}
 	}
 
+	const docClient = new AWS.DynamoDB.DocumentClient({
+		region: "ca-central-1",
+	});
+
+	const unUser = AWS.DynamoDB.Converter.unmarshall(user.Item);
+	const loginLogs = unUser.loginLog ? unUser.loginLog : [];
+	loginLogs.push(new Date().toISOString());
+
+	// add user login log
+	const params3 = {
+		TableName: "serverless-project-users",
+		Key: {
+			uid,
+		},
+		UpdateExpression: "set loginLog = :loginLog",
+		ExpressionAttributeValues: {
+			":loginLog": loginLogs,
+		},
+		ReturnValues: "ALL_NEW",
+	};
+	await docClient.update(params3).promise();
+
 	return res.json({
 		success: true,
 		message: "Security questions match",
@@ -129,6 +154,58 @@ API.get("/getUser", async (req, res) => {
 	return res.json({
 		success: true,
 		user: AWS.DynamoDB.Converter.unmarshall(user.Item),
+	});
+});
+
+API.get("/generateUsers", async (req, res) => {
+	for (let i = 0; i < 10; i++) {
+		const params = {
+			TableName: "serverless-project-users",
+			Item: {
+				uid: {
+					S: Math.floor(Math.random() * 100000).toString(),
+				},
+				email: {
+					S: `${Math.floor(Math.random() * 100000).toString()}@gmail.com`,
+				},
+				cipherKeyNumber: {
+					N: Math.floor(Math.random() * 100).toString(),
+				},
+				createdAt: {
+					S: new Date(2022, 6, Math.floor(Math.random() * 30)).toISOString(),
+				},
+			},
+		};
+		await dynamodb.putItem(params).promise();
+	}
+	return res.json({
+		success: true,
+		message: "Users generated successfully",
+	});
+});
+
+API.get("/loginUser", async (req, res) => {
+	const userId = req.query.userId;
+
+	// add user login log
+	const params = {
+		TableName: "serverless-project-users",
+		Key: {
+			uid: {
+				S: userId,
+			},
+		},
+		UpdateExpression: "set loginLog = list_append(loginLog, :loginLog)",
+		ExpressionAttributeValues: {
+			":loginLog": AWS.DynamoDB.Converter.marshall({
+				loginAt: new Date().toISOString(),
+			}),
+		},
+		ReturnValues: "ALL_NEW",
+	};
+	await dynamodb.updateItem(params).promise();
+	return res.json({
+		success: true,
 	});
 });
 
