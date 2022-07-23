@@ -33,7 +33,6 @@ def book_tour(event):
         scores = predict_data["scores"]
         index = scores[index(max(scores))]
         price = predict_data["price"][index]
-        # price = "100"x
 
         book_ticket = http.request(
             "GET", url=f"https://us-central1-peak-service-312506.cloudfunctions.net/create-ticket?place={place}&start_date={from_date}&end_date={To_date}&price={price}&user_id={user_email}")
