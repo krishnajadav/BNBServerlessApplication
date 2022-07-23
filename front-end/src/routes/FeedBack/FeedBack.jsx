@@ -49,7 +49,6 @@ export default function Feedback() {
                     "id": jsonformat.userId,
                     "name": jsonformat.displayName,
                     "email": jsonformat.email,
-                    "mobileno": "0123456789",
                     "feedback": formValue.feedback,
                     "sentiment": feedtype,
                 };
