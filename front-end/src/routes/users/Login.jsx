@@ -98,6 +98,15 @@ const Login = () => {
 
 			const userData = JSON.parse(localStorage.getItem("user"));
 
+			await axios({
+				method: "POST",
+				url: `https://us-central1-serverless-project-356317.cloudfunctions.net/api/verifySecurityQuestions`,
+				data: {
+					uid: userData.userId,
+					securityQuestions,
+				},
+			});
+
 			const verifyCipher = await axios({
 				method: "POST",
 				url: `https://rjk25rvoq3.execute-api.ca-central-1.amazonaws.com/dev/validateCipher`,
