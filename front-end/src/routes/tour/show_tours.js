@@ -49,7 +49,7 @@ function ShowTours(props) {
         place: item.place,
         start_date: data.start_date,
         end_date: data.end_date,
-        price: "100",
+        price: price,
         user_id: user.email
       }
     })
