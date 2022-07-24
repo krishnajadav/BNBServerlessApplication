@@ -71,6 +71,12 @@ const AddRoom = (props) => {
 
         <div className="btn-group btn-group-lg w-100 mt-5" role="group" aria-label="Basic example">
           <a href="/manage_room" type="button" className="btn btn-secondary">Manage Rooms</a>
+          <a href="/userfeedback" type="button" className="btn btn-secondary">
+							See FeedBacks
+						</a>
+						<a href="/data_visualization" type="button" className="btn btn-secondary">
+							See Data visualization
+						</a>
           <a href="/login" type="button" className="btn btn-secondary">Logout</a>
         </div>
       </div>
