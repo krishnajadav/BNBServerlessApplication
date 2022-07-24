@@ -7,9 +7,9 @@ from google.cloud import pubsub_v1
 
 dynamodb_client = boto3.client('dynamodb',
                                region_name='us-east-1',
-                               aws_access_key_id="ASIARR4VPHN4QBDGKQ6A",
-                               aws_secret_access_key="1tDeNICiSAN+rgE4Em+UK0NBcH/L0V7aRSelWVWv",
-                               aws_session_token="FwoGZXIvYXdzEEUaDCM4xMOf50O7Ka+NOyLAAQmOC91N3fgao9J4eXIZWI3z5LJZX0Nd8K3p3ySdH9p4zeJ8uIZui8R3NHN8UUJdntUatbAFP/Iz0O1yqQCF4jC7wPHYfcNBPemW7q2AswvJTeyC+nSxYiXEd/n6N4EtGgFkiIRRsI6yA9MOW3Lof6J/Kpx+h47AXL0wNS6090EPiRfSGZZCMDTxxz8smjf89crPcahmTrlH0sSv6oS3Pw958AsTIDRP+MKUjRCpRA3u4tMnUTdez7UFdDX5gae5OCjUjPGWBjItLMqM2tdP+oW5VbV0PL+tGnaQM8f9+xC13gnOKEw1eASF6ETqwbqjoLDmVhRI")
+                               aws_access_key_id="ASIARR4VPHN4S2OSS6PW",
+                               aws_secret_access_key="VDBXg3k2T3fYJ906Qncg9csDaS0JtTAO6gTSdxo5",
+                               aws_session_token="FwoGZXIvYXdzEFwaDDnw5pwtC2btgLyjgyLAASoXJCcb36tx8v0dfdHJLe9txJrslFg6bphh8uNnZYXPAkBO0ybvIbX/36LtjNpQnz/2O7CRwIpm9s0AC0A+mGbT27/UcBVJMcJRUv+BRH/MHqCjB7s0A32c/wq5MVPF7UWtJxeRgEvf4ytaT7ILZhNyko5RJA2vRPcdE1si/ezNTP7pcVYrFfXR3KPE6kj/P9XsOHx1HWJwvLhpQDIY98yB7z8JAeleaO0OpBy9rWEXuCNiB32MofXH8Yd76GXk8ijsqPaWBjItNaxfjtY2njQk3RkdHzzlY6IG4h7NW65q8cveaFT2xvbzH9afO1n67vkk5u/6")
 
 
 TOUR_DETAILS_TABLE_NAME = "tour-details"
