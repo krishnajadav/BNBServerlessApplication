@@ -106,12 +106,6 @@ function Kitchen(Props) {
 						<a href="/my_tickets" type="button" className="btn btn-secondary">
 							My tour bookings
 						</a>
-						<a href="/userfeedback" type="button" className="btn btn-secondary">
-							See FeedBacks
-						</a>
-						<a href="/data_visualization" type="button" className="btn btn-secondary">
-							See Data visualization
-						</a>
 						<a href="/report" type="button" className="btn btn-secondary">
 							Access Report
 						</a>
