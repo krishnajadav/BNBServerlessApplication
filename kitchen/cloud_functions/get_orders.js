@@ -1,8 +1,8 @@
 var AWS = require('aws-sdk');
 AWS.config.update({
-    accessKeyId: "ASIAZSJWKMQSKV6WFHYS",
-    secretAccessKey: "DXBiO6prbVr7JblMUzgzR4yss64R45aF1ltXPxhI",
-    sessionToken: "FwoGZXIvYXdzEDYaDFPkxIK4pbLY69vdHSLAAVgwcMEK+2J4DFW70YIV+CT0M/bcdHCtKV4nU/C46InY3NpdQ71Uo+u9gwyBwBvw1d3Gv7AvilqU0Tj/WHKMBMpYdocZ6Y5THamvD8NNuVa0OwYn+U7p5Mr/FOeyqqzEDweU3zlF0dHU7FlNTUgI0E06bo/jT8bQa1xxwkCHz5MfB81jl9Z1ljP5yI5fGTc+V7c/Mw/IDb73KUP7KnlHYE6rId/AdhmO5wbkAgWOqmDiHWavQaDHJQn0biJUSdshhiirgu6WBjItaHf4LZsP0o7Sx7yLhzOwbt8wPJcW9xOM7UZJKgFXAGLSef1X3Or4rBFLE8lZ"
+    accessKeyId: "",
+    secretAccessKey: "",
+    sessionToken: ""
   });
 
 
