@@ -6,12 +6,12 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const firebaseConfig = {
-	apiKey: "AIzaSyB2kHMTFMno79RFsg2E2qAOpM1IRpJaEZQ",
-	authDomain: "serverless-project-356317.firebaseapp.com",
-	projectId: "serverless-project-356317",
-	storageBucket: "serverless-project-356317.appspot.com",
-	messagingSenderId: "514886481850",
-	appId: "1:514886481850:web:e5ba2259bbdbc9de3b8f83",
+	apiKey: "",
+	authDomain: "",
+	projectId: "",
+	storageBucket: "",
+	messagingSenderId: "",
+	appId: "",
 };
 
 const app = initializeApp(firebaseConfig);
